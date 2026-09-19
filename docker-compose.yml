@@ -1,0 +1,40 @@
+# PlantMind — local development stack.
+# Usage: docker compose up --build
+# Frontend: http://localhost:5173 · API: http://localhost:8000 · Docs: /docs
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    ports:
+      - "8000:8000"
+    environment:
+      # SQLite by default; swap for a PostgreSQL URL in production.
+      DATABASE_URL: sqlite:///backend/data/plantmind.db
+      SEED_DEMO: "true"
+      GRAPH_BACKEND: sqlite
+      # Optional grounded LLM reasoning — provide via .env or your shell:
+      # LLM_API_KEY: ${LLM_API_KEY:-}
+      # LLM_MODEL: ${LLM_MODEL:-gpt-4o-mini}
+      # LLM_BASE_URL: ${LLM_BASE_URL:-https://api.openai.com/v1}
+    volumes:
+      - uploads:/app/uploads
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/api/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  uploads:

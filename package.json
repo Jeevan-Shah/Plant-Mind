@@ -1,0 +1,15 @@
+{
+  "name": "plantmind",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PlantMind — An Explainable AI Plant-Care System Using Knowledge Graphs, Computer Vision and GraphRAG",
+  "scripts": {
+    "setup": "npm --prefix frontend install && pip install -r backend/requirements.txt",
+    "dev": "npm --prefix frontend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8000 --reload",
+    "build": "npm --prefix frontend run build",
+    "seed": "python backend/seed.py"
+  }
+}
+

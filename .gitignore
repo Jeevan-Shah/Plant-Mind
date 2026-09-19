@@ -1,0 +1,58 @@
+# PlantMind — keep build outputs & toolchains out of version control
+
+# Python
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+backend/data/
+
+# Runtime env & secrets
+.env
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Frontend test artifacts
+frontend/test-results/
+frontend/playwright-report/
+
+# Local toolchain (auto-downloaded Java/Android SDK/Gradle/Node) & scratch
+.tools/
+logs/
+
+# Uploaded plant images (runtime data)
+uploads/*
+!uploads/.gitkeep
+
+# Android build artifacts (Capacitor project sources ARE committed)
+frontend/android/.gradle/
+frontend/android/build/
+frontend/android/app/build/
+frontend/android/capacitor-cordova-android-plugins/build/
+frontend/android/local.properties
+*.apk
+!PlantMind.apk
+
+# Wrangler / Cloudflare
+.wrangler/
+.dev.vars
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
