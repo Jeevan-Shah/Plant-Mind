@@ -1,0 +1,37 @@
+{
+  "comment": "PlantMind V1 demonstration knowledge base. Relationships are illustrative for the prototype and are NOT scientifically exhaustive.",
+  "entities": [
+    { "id": "plant_tomato", "entity_type": "Plant", "name": "Tomato", "description": "Warm-season fruiting crop (Solanum lycopersicum). Susceptible to several fungal and oomycete foliar diseases, especially in humid conditions." },
+    { "id": "plant_rose", "entity_type": "Plant", "name": "Rose", "description": "Ornamental flowering shrub (Rosa spp.). Commonly affected by fungal leaf diseases and powdery mildew." },
+    { "id": "plant_potato", "entity_type": "Plant", "name": "Potato", "description": "Tuber crop (Solanum tuberosum). Highly susceptible to late blight under cool, wet conditions." },
+    { "id": "plant_apple", "entity_type": "Plant", "name": "Apple", "description": "Fruit tree (Malus domestica). Prone to fungal leaf diseases and powdery mildew in humid climates." },
+
+    { "id": "disease_early_blight", "entity_type": "Disease", "name": "Early Blight", "description": "Fungal disease caused by Alternaria solani. Produces dark brown spots with concentric rings, often surrounded by yellowing tissue, starting on lower leaves." },
+    { "id": "disease_late_blight", "entity_type": "Disease", "name": "Late Blight", "description": "Aggressive oomycete disease caused by Phytophthora infestans. Produces water-soaked dark lesions that spread rapidly in cool, humid weather." },
+    { "id": "disease_powdery_mildew", "entity_type": "Disease", "name": "Powdery Mildew", "description": "Fungal disease producing white, powdery patches on leaf surfaces. Favored by humidity with poor air circulation." },
+    { "id": "disease_leaf_spot", "entity_type": "Disease", "name": "Leaf Spot", "description": "General fungal leaf-spotting condition producing discrete brown or black spots, sometimes with yellow halos." },
+    { "id": "disease_nitrogen_deficiency", "entity_type": "Disease", "name": "Nitrogen Deficiency", "description": "Nutrient disorder causing uniform yellowing, typically starting with older, lower leaves and reduced growth." },
+    { "id": "disease_overwatering_stress", "entity_type": "Disease", "name": "Overwatering Stress", "description": "Physiological stress caused by waterlogged roots: yellowing leaves, wilting despite moist soil, and general decline." },
+
+    { "id": "symptom_yellow_leaves", "entity_type": "Symptom", "name": "Yellow Leaves", "description": "Chlorosis: leaf tissue turning yellow. Can indicate nutrient deficiency, overwatering, or disease." },
+    { "id": "symptom_brown_spots", "entity_type": "Symptom", "name": "Brown Spots", "description": "Discrete brown necrotic spots on leaves, often with concentric rings or yellow halos." },
+    { "id": "symptom_white_powder", "entity_type": "Symptom", "name": "White Powder", "description": "White, powdery or dusty coating on leaf surfaces, typical of powdery mildew." },
+    { "id": "symptom_wilting", "entity_type": "Symptom", "name": "Wilting", "description": "Drooping or loss of turgor in leaves and stems despite available water." },
+    { "id": "symptom_leaf_curling", "entity_type": "Symptom", "name": "Leaf Curling", "description": "Leaves curling upward, downward, or inward; can indicate stress, pest damage, or disease." },
+    { "id": "symptom_dark_lesions", "entity_type": "Symptom", "name": "Dark Lesions", "description": "Dark brown to black necrotic patches on leaves or stems, often water-soaked in appearance." },
+
+    { "id": "condition_high_humidity", "entity_type": "EnvironmentalCondition", "name": "High Humidity", "description": "Sustained high relative humidity around foliage, which favors fungal and oomycete disease development." },
+    { "id": "condition_low_light", "entity_type": "EnvironmentalCondition", "name": "Low Light", "description": "Insufficient light exposure, weakening plants and prolonging leaf wetness." },
+    { "id": "condition_excess_moisture", "entity_type": "EnvironmentalCondition", "name": "Excess Moisture", "description": "Overly wet growing medium or persistently damp foliage." },
+    { "id": "condition_poor_ventilation", "entity_type": "EnvironmentalCondition", "name": "Poor Ventilation", "description": "Stagnant air around plants, which raises local humidity and favors fungal spores." },
+    { "id": "condition_nutrient_deficiency", "entity_type": "EnvironmentalCondition", "name": "Nutrient Deficiency", "description": "Insufficient nutrient availability in the growing medium." },
+    { "id": "condition_adequate_light", "entity_type": "EnvironmentalCondition", "name": "Adequate Light", "description": "Appropriate light exposure for healthy photosynthesis and sturdy growth." },
+
+    { "id": "treatment_improve_ventilation", "entity_type": "Treatment", "name": "Improve Ventilation", "description": "Increase air circulation around plants by spacing, pruning, or using fans. Reduces humidity and fungal pressure." },
+    { "id": "treatment_reduce_excess_watering", "entity_type": "Treatment", "name": "Reduce Excess Watering", "description": "Water only when the topsoil begins to dry; water the base rather than the foliage." },
+    { "id": "treatment_remove_affected_leaves", "entity_type": "Treatment", "name": "Remove Affected Leaves", "description": "Prune and dispose of diseased leaves to reduce inoculum and slow disease spread." },
+    { "id": "treatment_improve_light", "entity_type": "Treatment", "name": "Improve Light", "description": "Relocate the plant or supplement lighting so it receives adequate, appropriate light." },
+    { "id": "treatment_nutrient_management", "entity_type": "Treatment", "name": "Nutrient Management", "description": "Apply a balanced fertilizer at the correct rate and interval to correct deficiencies." },
+    { "id": "treatment_monitor_disease_progression", "entity_type": "Treatment", "name": "Monitor Disease Progression", "description": "Inspect the plant regularly, photograph symptoms, and track whether the condition is improving or worsening." }
+  ]
+}
