@@ -90,7 +90,7 @@ echo  %ROOT%PlantMind.apk
 echo  also at frontend\android\app\build\outputs\apk\debug\app-debug.apk
 echo  Send it to your phone and install it.
 echo ===============================================
-if not exist "%ROOT%PlantMind.apk" copy /y "app\build\outputs\apk\debug\app-debug.apk" "%ROOT%PlantMind.apk" >nul
+copy /y "app\build\outputs\apk\debug\app-debug.apk" "%ROOT%PlantMind.apk" >nul
 pause
 exit /b 0
 
