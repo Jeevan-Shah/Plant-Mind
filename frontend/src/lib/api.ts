@@ -2,6 +2,7 @@ import { Capacitor } from '@capacitor/core';
 import type {
   Analysis,
   CareEvent,
+  ChatResponse,
   DashboardStats,
   Entity,
   HealthCheck,
@@ -155,6 +156,13 @@ export const api = {
     request<Entity>(`/api/knowledge/entity/${id}`),
   knowledgeRelationships: (id: string) =>
     request<RelationshipSet>(`/api/knowledge/relationships/${id}`),
+
+  chat: (analysisId: number, messages: { role: 'user' | 'assistant'; content: string }[]) =>
+    request<ChatResponse>('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ analysis_id: analysisId, messages }),
+    }),
 
   resetDemo: () =>
     request<{ status: string; demo_plants_created: number }>('/api/demo/reset', {

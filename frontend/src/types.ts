@@ -125,3 +125,21 @@ export interface HealthCheck {
   llm_configured: boolean;
   reasoning_mode: string;
 }
+
+export interface ChatSource {
+  label: string;
+  detail: string;
+}
+
+export interface ChatTurn {
+  role: 'user' | 'assistant';
+  content: string;
+  sources?: ChatSource[];
+  mode?: string;
+}
+
+export interface ChatResponse {
+  answer: string;
+  sources: ChatSource[];
+  mode: string;
+}

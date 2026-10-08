@@ -1,5 +1,6 @@
 import { ArrowRight, BookOpen, CheckCircle2, FlaskConical, Lightbulb, Network, ShieldAlert, ShieldCheck } from 'lucide-react';
 import type { Analysis, Triple } from '../types';
+import { ChatAssistant } from './ChatAssistant';
 import { Badge, Card, riskTone } from './ui';
 import { formatDateTime, pct } from './ui';
 
@@ -169,6 +170,9 @@ export function AnalysisReport({ analysis }: { analysis: Analysis }) {
           ))}
         </ul>
       </Card>
+
+      {/* Follow-up chat: further doubts after the result */}
+      <ChatAssistant analysisId={analysis.id} plantName={analysis.plant_name} />
     </div>
   );
 }
