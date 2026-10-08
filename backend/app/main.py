@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from .api import routes_analyses, routes_knowledge, routes_meta, routes_plants
+from .api import routes_analyses, routes_chat, routes_knowledge, routes_meta, routes_plants
 from .config import UPLOAD_DIR
 from .database import Base, SessionLocal, engine
 from . import models  # noqa: F401  (register models on the Base metadata)
@@ -48,6 +48,7 @@ app.add_middleware(
 
 app.include_router(routes_plants.router)
 app.include_router(routes_analyses.router)
+app.include_router(routes_chat.router)
 app.include_router(routes_knowledge.router)
 app.include_router(routes_meta.router)
 

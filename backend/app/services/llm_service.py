@@ -80,3 +80,71 @@ def generate(plant_state: dict, evidence: dict, diagnosis: dict) -> dict | None:
         if part:
             extra_recommendations.append(part)
     return {'summary': summary.strip(), 'extra_recommendations': extra_recommendations[:3]}
+
+# --- Follow-up chat -----------------------------------------------------------
+CHAT_SYSTEM_PROMPT = """You are PlantMind's plant-care follow-up assistant inside an explainable plant-health app.
+You help the user understand ONE completed analysis. Answer ONLY from the ANALYSIS
+CONTEXT and RETRIEVED EVIDENCE provided in this message - do not use outside facts.
+Rules:
+- Be concise (max 120 words), friendly and practical.
+- Say plainly when the evidence does not cover the question instead of inventing facts.
+- Keep calling the diagnosis a POSSIBLE condition unless evidence confirms it.
+- End with one short concrete next step when applicable.
+"""
+
+
+def _analysis_block(analysis: dict) -> str:
+    state = analysis.get('plant_state') or {}
+    recs = '; '.join(r.get('title', '') for r in (analysis.get('recommendation') or [])[:5])
+    return (
+        f"Plant: {analysis.get('plant_name')} ({state.get('species')}), "
+        f"stage {state.get('growth_stage')}, age {state.get('age_days')} days\n"
+        f"Possible condition: {analysis.get('predicted_condition')} "
+        f"(demo confidence {round((analysis.get('confidence') or 0) * 100)}%)\n"
+        f"Plant-state risk: {state.get('risk_level')}\n"
+        f"Detected symptoms: {', '.join(analysis.get('detected_symptoms') or []) or 'none'}\n"
+        f"Reported by user: {state.get('reported_symptoms_text') or 'none'}\n"
+        f"Watering: {state.get('watering_frequency')} | Light: {state.get('light_condition')}\n"
+        f"Environmental flags: {', '.join(state.get('environmental_flags') or []) or 'none'}\n"
+        f"Explanation: {' '.join((analysis.get('explanation') or [])[:3])}\n"
+        f"Recommendations: {recs or 'none'}\n"
+        f"Limitations: {' '.join((analysis.get('limitations') or [])[:2])}"
+    )
+
+
+def _evidence_block(evidence: dict) -> str:
+    entities = ', '.join(f"{e['name']} ({e.get('entity_type', '?')})"
+                         for e in evidence.get('entities', [])[:15])
+    triples = '\n'.join(
+        f"- {t['source_name']} ({t['relationship']}) {t['target_name']}"
+        for t in evidence.get('triples', [])[:30])
+    docs = '\n\n'.join(
+        f"Document: {d['title']}\n{d['excerpt']}" for d in evidence.get('documents', []))
+    return f"Entities: {entities or '(none)'}\n\nTriples:\n{triples or '(none)'}\n\nDocuments:\n{docs or '(none)'}"
+
+
+def chat(analysis: dict, evidence: dict, history: list[dict],
+         question: str) -> str | None:
+    """Grounded follow-up answer. Returns None on any failure (caller falls back)."""
+    if not is_configured():
+        return None
+    context = (f"ANALYSIS CONTEXT:\n{_analysis_block(analysis)}\n\n"
+               f"RETRIEVED EVIDENCE (use only this):\n{_evidence_block(evidence)}")
+    payload = {
+        'model': LLM_MODEL,
+        'messages': [
+            {'role': 'system', 'content': CHAT_SYSTEM_PROMPT + '\n\n' + context},
+            *[{'role': m['role'], 'content': m['content']} for m in history[-8:]],
+            {'role': 'user', 'content': question},
+        ],
+        'temperature': 0.3,
+        'max_tokens': 350,
+    }
+    headers = {'Authorization': f'Bearer {LLM_API_KEY}'}
+    try:
+        response = httpx.post(f'{LLM_BASE_URL}/chat/completions', json=payload,
+                              headers=headers, timeout=LLM_TIMEOUT_SECONDS)
+        response.raise_for_status()
+        return response.json()['choices'][0]['message']['content'].strip()
+    except Exception:
+        return None

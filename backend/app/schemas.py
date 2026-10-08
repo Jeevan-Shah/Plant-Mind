@@ -112,3 +112,26 @@ class HealthCheck(BaseModel):
     vision_model: str
     llm_configured: bool
     reasoning_mode: str
+
+
+class ChatTurn(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    role: Literal['user', 'assistant']
+    content: str = Field(min_length=1, max_length=4000)
+
+
+class ChatRequest(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True)
+    analysis_id: int
+    messages: list[ChatTurn] = Field(min_length=1, max_length=40)
+
+
+class ChatSource(BaseModel):
+    label: str
+    detail: str
+
+
+class ChatResponse(BaseModel):
+    answer: str
+    sources: list[ChatSource]
+    mode: str
